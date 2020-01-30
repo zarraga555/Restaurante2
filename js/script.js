@@ -57,8 +57,9 @@ class Proveedores{
         direccionRow.innerHTML = direccion;
         var telefonoRow = row.insertCell();
         telefonoRow.innerHTML = telefono;
+        
         var butonRow = row.insertCell();
-        butonRow.innerHTML = button.html= "<input class='btnAcciones btn-danger' type='button' onclick = 'Eliminar(this);' value='Eliminar'>";
+        butonRow.innerHTML = button.html= "<input class='btnAcciones btn-danger' type='button' onclick = 'Eliminar(this);' value='Eliminar'><input class='btnAcciones btn-success' type='button' onclick = 'Editar(this);' value='Editar'>";
 
     }
     borrar(id){
@@ -69,6 +70,18 @@ class Proveedores{
 
     }
     editar(){
+        
+
+
+    }
+}
+
+class Almacen{
+    obtenerDatosAlmacen(){
+        var nombre = document.getElementById('nombre');
+        var tipoProducto = document.getElementById('tipoProduc');
+        var cantidad = document.getElementById('cantidad');
+        var proveedor = document.getElementById('proveedor');
 
     }
 }
