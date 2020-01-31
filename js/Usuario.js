@@ -1,22 +1,9 @@
 
 window.onload = init;
 let cm;
-function logeo(){
-    
-    var usuario = document.getElementById('txtusuario').value;
-    var password = document.getElementById('txtpassword').value;
-    console.log(usuario);
-    console.log(password);
-    if(usuario == "admin" && password == "admin"){
-        window.location = "../html/admin.html";
-    }else if(usuario == "cajero" && password == "cajero"){
-        window.location = "../html/cajero.html";
-    }else if(usuario == "contador" && password == "contador"){
-        window.location = "../html/contador.html";
-    }
-}
+
 function init(){
-    cm = new Proveedores();
+    cm = new Usuarios();
     cm.load();
     //cm.Registrar();
     cm.mostrarTabla();
@@ -24,19 +11,19 @@ function init(){
 
 
 function iniciar(){
-    /*
-    cm = new Proveedores();
-    cm.registrar();
-*/
-
+    
     let ci = document.getElementById('ci').value;
     let nombre = document.getElementById('nombre').value;
     let direccion = document.getElementById('direccion').value;
     let telefono = document.getElementById('telefono').value;
+    let email = document.getElementById('email').value;
+    let tipoUsuario = document.getElementById('tipousuario').value;
+    let id = document.getElementById('iduser').value;
+    let password = document.getElementById('password').value;
 
-    let ProveedorNuevo = new DatosProveedor(ci, nombre, direccion, telefono);
-    cm.agregar(ProveedorNuevo);
-    console.log(ci, nombre, direccion, telefono);
+    let UsuarioNuevo = new DatosUsuarios(ci, nombre, direccion, telefono, email, tipoUsuario, id, password);
+    cm.agregar(UsuarioNuevo);
+    console.log(ci, nombre, direccion, telefono, email, tipoUsuario, id, password);
 
     cm.mostrarTabla();
     cm.save();
@@ -45,58 +32,66 @@ function iniciar(){
 }
 
 function Eliminar(id){
-    cm = new Proveedores();
+    cm = new Usuarios();
     cm.borrar(id);
 }
 
 function Editar(id){
-    cm = new Proveedores();
+    cm = new Usuarios();
     cm.editar(id);
 }
 
-class DatosProveedor{
-    constructor(ci, nombre, direccion, telefono){
+class DatosUsuarios{
+    constructor(ci, nombre, direccion, telefono, email, tipoUsuario, id, password){
         this.ci = ci;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
+        this.email = email;
+        this.tipoUsuario = tipoUsuario;
+        this.id  = id;
+        this.password = password;
     }
 }
 
 
-class Proveedores{
+class Usuarios{
     constructor(){
-        this.aNuevoProveedor = [];
+        this.aNuevoUsuario = [];
     }
 
-    agregar(ProveedorNuevo){
+    agregar(UsuarioNuevo){
 
-        this.aNuevoProveedor.push(ProveedorNuevo);
+        this.aNuevoUsuario.push(UsuarioNuevo);
         
     }
 
     
     mostrarTabla(){
 
-        var cotainer = document.querySelector('#divProveedores');
+        var cotainer = document.querySelector('#divUsuarios');
         cotainer.innerHTML = "";
 
-        if(this.aNuevoProveedor.length == 0){
-            cotainer.innerHTML = "<p>No hay datos disponibles</p>";
+        if(this.aNuevoUsuario.length == 0){
+            cotainer.innerHTML = "<p class='leyenda'>No hay datos disponibles</p>";
             return;
         }
 
         let table = document.createElement("table");
         table.className = "table  table-condensed"
         table.id="mytable2";
-        this.aNuevoProveedor.forEach(function(Proveedor){
+        this.aNuevoUsuario.forEach(function(Usuario){
             
             let row = table.insertRow();
 
-            row.innerHTML = "<td>" + Proveedor.ci + "</td>"
-            + "<td>" + Proveedor.nombre + "</td>"
-            + "<td>" + Proveedor.direccion + "</td>"
-            + "<td>" + Proveedor.telefono + "</td>"
+            row.innerHTML = "<td>" + Usuario.ci + "</td>"
+            + "<td>" + Usuario.nombre + "</td>"
+            + "<td>" + Usuario.direccion + "</td>"
+            + "<td>" + Usuario.telefono + "</td>"
+            + "<td>" + Usuario.email + "</td>"
+            + "<td>" + Usuario.tipoUsuario + "</td>"
+            + "<td>" + Usuario.id + "</td>"
+            + "<td>" + Usuario.password + "</td>"
             +"<td><input class='btnAcciones btn-danger' type='button' onclick = 'Eliminar(this);' value='Eliminar'><input class='btnAcciones btn-success' type='button' data-toggle='modal' data-target='#exampleModalM' onclick = 'Editar(this);' value='Editar'></td>"
         });
         cotainer.appendChild(table);
@@ -104,13 +99,13 @@ class Proveedores{
 
     save(){
         
-        localStorage.proveedor = JSON.stringify(this.aNuevoProveedor);
+        localStorage.usuario = JSON.stringify(this.aNuevoUsuario);
 
     }
     
     load(){
-        if(localStorage.proveedor !== undefined){
-            this.aNuevoProveedor = JSON.parse(localStorage.proveedor);
+        if(localStorage.usuario !== undefined){
+            this.aNuevoUsuario = JSON.parse(localStorage.usuario);
         }
     }
     borrar(id){

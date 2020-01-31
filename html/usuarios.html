@@ -14,7 +14,7 @@
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/estilos.css">
-    <script src="../js/script.js"></script>
+    <script src="../js/Usuario.js"></script>
 </head>
 
 <body>
@@ -44,12 +44,12 @@
             <div class="info">
                 <div class="">
                     <div class="title-container">
-                        <h1>Proveedores</h1>
+                        <h1>Usuarios</h1>
                     </div>
                     <div class="buton-container">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            Agregar Proveedor
+                            Agregar Usuario
                         </button>
 
                         <!-- INICIO DE MODAL DE AGREGACION DE DATOS Modal Agregar datos-->
@@ -82,7 +82,22 @@
                                                 <label for="telefono">Telefono</label>
                                                 <input id="telefono" type="number" class="form-control" required>
                                             </div>
-
+                                            <div class="form-group">
+                                                <label for="email">Correo Electronico</label>
+                                                <input id="email" type="email" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="tipousuario">Tipo de Usuario</label>
+                                                <input id="tipousuario" type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="iduser">Nombre usuario</label>
+                                                <input id="iduser" type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Contraseña</label>
+                                                <input id="password" type="text" class="form-control" required>
+                                            </div>
                                         </div>
                                     
                                         <div class="modal-footer">
@@ -144,11 +159,15 @@
                             <td>Nombre</td>
                             <td>Direccion</td>
                             <td>Telefono</td>
+                            <td>Email</td>
+                            <td>Tipo Usuario</td>
+                            <td>Usuario</td>
+                            <td>Contraseña</td>
                             <td>Acciones</td>
                         </tr>
                     </table>
                 </div>
-                <div id="divProveedores"></div>
+                <div id="divUsuarios"></div>
 
 
 
