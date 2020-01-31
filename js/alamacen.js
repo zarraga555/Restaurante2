@@ -12,7 +12,7 @@ function init(){
 
 function iniciar(){
     
-    let tipoPdoducto = document.getElementById('tipoProducto').value;
+    let tipoProducto = document.getElementById('tipoProducto').value;
     let nombre = document.getElementById('nombre').value;
     let cantidad = document.getElementById('cantidad').value;
     let proveedor = document.getElementById('proveedor').value;
