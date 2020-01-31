@@ -1,3 +1,5 @@
+
+window.onload = init;
 let cm;
 function logeo(){
     
@@ -13,13 +15,35 @@ function logeo(){
         window.location = "../html/contador.html";
     }
 }
+function init(){
+    cm = new Proveedores();
+    cm.load();
+    //cm.Registrar();
+    cm.mostrarTabla();
+}
+
 
 function iniciar(){
+    /*
     cm = new Proveedores();
-    cm.obtenerDatos();
-    
+    cm.registrar();
+*/
+
+    let ci = document.getElementById('ci').value;
+    let nombre = document.getElementById('nombre').value;
+    let direccion = document.getElementById('direccion').value;
+    let telefono = document.getElementById('telefono').value;
+
+    let ProveedorNuevo = new DatosProveedor(ci, nombre, direccion, telefono);
+    cm.agregar(ProveedorNuevo);
+    console.log(ci, nombre, direccion, telefono);
+
+    cm.mostrarTabla();
+    cm.save();
+    return false;
 
 }
+/*
 function Eliminar(id){
     cm = new Proveedores();
     cm.borrar(id);
@@ -29,59 +53,91 @@ function Editar(){
     cm = new Proveedores();
     cm.editar();
 }
+*/
+class DatosProveedor{
+    constructor(ci, nombre, direccion, telefono){
+        this.ci = ci;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+    }
+}
+
 
 class Proveedores{
-
-    obtenerDatos(){
-        let ci = document.getElementById('ci').value;
-        let nombre = document.getElementById('nombre').value;
-        let direccion = document.getElementById('direccion').value;
-        let telefono = document.getElementById('telefono').value;
-
-        this.anadir(ci, nombre, direccion, telefono);
+    constructor(){
+        this.aNuevoProveedor = [];
     }
 
-    anadir(ci, nombre, direccion, telefono){
-        var table = document.querySelector('#mytable');
-        var row = table.insertRow();
+    agregar(ProveedorNuevo){
 
-        var button = document.createElement('button');
+        this.aNuevoProveedor.push(ProveedorNuevo);
         
+    }
+
+    
+    mostrarTabla(){
+
+        var cotainer = document.querySelector('#divProveedores');
+        cotainer.innerHTML = "";
+
+        if(this.aNuevoProveedor.length == 0){
+            cotainer.innerHTML = "<p>No hay datos disponibles</p>";
+            return;
+        }
+
+        let table = document.createElement("table");
+        table.className = "table  table-condensed"
+        this.aNuevoProveedor.forEach(function(Proveedor){
+            
+            let row = table.insertRow();
+
+            row.innerHTML = "<td>" + Proveedor.ci + "</td>"
+            + "<td>" + Proveedor.nombre + "</td>"
+            + "<td>" + Proveedor.direccion + "</td>"
+            + "<td>" + Proveedor.telefono + "</td>"
+            +"<td> .</td>"
+        });
+        cotainer.appendChild(table);
 
 
-        var ciRow = row.insertCell();
-        ciRow.innerHTML = ci;
-        var nombreRow = row.insertCell();
-        nombreRow.innerHTML = nombre;
-        var direccionRow = row.insertCell();
-        direccionRow.innerHTML = direccion;
-        var telefonoRow = row.insertCell();
-        telefonoRow.innerHTML = telefono;
+        /*
+        var personas = this.obtenerProveedor();
+        var tbody = document.querySelector('#mytable tbody');
+        for(var i = 0; i<personas.length; i++){
+            var fila = document.createElement('tr');
+            var celdaci = document.createElement('td');
+            var celdanombre = document.createElement('td');
+            var celdadireccion = document.createElement('td');
+            var celdatelefono = document.createElement('td');
+
+            celdaci.innerHTML = this.aNuevoProveedor[i][0];
+            celdanombre.innerHTML = this.aNuevoProveedor[i][1];
+            celdadireccion.innerHTML = this.aNuevoProveedor[i][2];
+            celdatelefono.innerHTML = this.aNuevoProveedor[i][3];
+
+            fila.appendChild(celdaci);
+            fila.appendChild(celdanombre);
+            fila.appendChild(celdadireccion);
+            fila.appendChild(celdatelefono);
+
+            tbody.appendChild(fila);
+
+        }
+        */
+    }
+
+    save(){
         
-        var butonRow = row.insertCell();
-        butonRow.innerHTML = button.html= "<input class='btnAcciones btn-danger' type='button' onclick = 'Eliminar(this);' value='Eliminar'><input class='btnAcciones btn-success' type='button' onclick = 'Editar(this);' value='Editar'>";
+        localStorage.proveedor = JSON.stringify(this.aNuevoProveedor);
 
     }
-    borrar(id){
-        var cell = id.parentNode;
-        var row = cell.parentNode;
-        var table = document.querySelector('#mytable');
-        table.deleteRow(row.rowIndex);
-
+    
+    load(){
+        if(localStorage.proveedor !== undefined){
+            this.aNuevoProveedor = JSON.parse(localStorage.proveedor);
+        }
     }
-    editar(){
-        
 
-
-    }
 }
 
-class Almacen{
-    obtenerDatosAlmacen(){
-        var nombre = document.getElementById('nombre');
-        var tipoProducto = document.getElementById('tipoProduc');
-        var cantidad = document.getElementById('cantidad');
-        var proveedor = document.getElementById('proveedor');
-
-    }
-}
